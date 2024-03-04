@@ -1,0 +1,72 @@
+#!/bin/bash
+
+source ./envinstall_log.sh
+source ./envinstall_programs.sh
+
+install_deps() {
+    warn "Starting installation"
+    sudo apt update && sudo apt install apt-transport-https gnupg ca-certificates software-properties-common build-essential curl fzf -y
+    warn "Adding repositories"
+    ./envinstall_repositories.sh
+}
+
+do_install() {
+    __install_$1__
+}
+
+install_program() {
+    if [ -n "$1" ]; then
+        start "$1 is being installed"
+        do_install $1
+        finish "$1 installation is finished" $?
+    fi
+}
+
+list_all_programs() {
+    cat ./envinstall_programs.sh | grep -Eo "__[0-9]*_?install_[a-zA-Z0-9_]*__" | sed -E 's/__([0-9]*_?)?install_([a-zA-Z0-9_]*)__.*/\2/'
+}
+
+install_all_programs() {
+    local programs
+    programs=$(list_all_programs)
+    for program in $programs; do
+        install_program $program
+    done
+}
+
+install_help() {
+    warn "Commands:"
+    echo "-i:     Install a program. Program name is optional."
+    echo "-h:     Shows this info."
+    echo "-all:   Install all programs available."
+    echo "-deps:  Install all dependencies needed."
+}
+
+envinstall() {
+case $1 in
+    -i)
+        if [ -n "$2" ]; then
+            install_program $2
+        else
+            program=$(list_all_programs | sort -r | fzf --prompt="Select a program: ")
+            install_program $program
+        fi
+        ;;
+    -deps)
+        install_deps
+        ;;
+    -all)
+        install_deps
+        install_all_programs
+        ;;
+    -h)
+        install_help
+        ;;
+    *)
+        install_help
+        ;;
+esac
+
+}
+
+envinstall $1 $2
