@@ -1,5 +1,5 @@
 #!/bin/bash
-source ./envinstall_log.sh
+source /usr/local/src/envinstall/envinstall_log.sh
 
 warn "Microsoft repository being added"
 curl https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > /tmp/microsoft.gpg && \

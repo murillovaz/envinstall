@@ -1,5 +1,5 @@
 #!/bin/bash
-source ./envinstall_log.sh
+source /usr/local/src/envinstall/envinstall_log.sh
 
 
 __install_git__() {

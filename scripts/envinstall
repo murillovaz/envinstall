@@ -1,7 +1,7 @@
 #!/bin/bash
 
-source ./envinstall_log.sh
-source ./envinstall_programs.sh
+source /usr/local/src/envinstall/envinstall_log.sh
+source /usr/local/src/envinstall/envinstall_programs.sh
 
 install_deps() {
     warn "Starting installation"
