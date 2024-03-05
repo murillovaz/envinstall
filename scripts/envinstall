@@ -23,7 +23,7 @@ install_program() {
 }
 
 list_all_programs() {
-    cat ./envinstall_programs.sh | grep -Eo "__[0-9]*_?install_[a-zA-Z0-9_]*__" | sed -E 's/__([0-9]*_?)?install_([a-zA-Z0-9_]*)__.*/\2/'
+    cat /usr/local/src/envinstall/envinstall_programs.sh | grep -Eo "__[0-9]*_?install_[a-zA-Z0-9_]*__" | sed -E 's/__([0-9]*_?)?install_([a-zA-Z0-9_]*)__.*/\2/'
 }
 
 install_all_programs() {
