@@ -125,3 +125,15 @@ __install_dotfiles__() {
     config config --local status.showUntrackedFiles no && \
     config checkout
 }
+
+__install_nitrogen__() {
+    sudo apt install nitrogen -y
+}
+
+__install_i3__() {
+    sudo apt install i3 -y
+}
+
+__install_picom__() {
+    sudo apt install picom -y
+}
