@@ -28,4 +28,10 @@ sudo curl -fsSL https://download.docker.com/linux/debian/gpg -o /etc/apt/keyring
 sudo chmod a+r /etc/apt/keyrings/docker.asc && \
 echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/debian $(. /etc/os-release && echo "$VERSION_CODENAME") stable" |   sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
 
+warn "i3 repository being added"
+sudo install -m 0755 -d /etc/apt/keyrings && \
+sudo wget -O /etc/apt/keyrings/i3.asc https://baltocdn.com/i3-window-manager/signing.asc && \
+sudo chmod a+r /etc/apt/keyrings/i3.asc && \
+echo "deb [arch=amd64  signed-by=/etc/apt/keyrings/i3.asc] https://baltocdn.com/i3-window-manager/i3/i3-autobuild/ all main" | sudo tee /etc/apt/sources.list.d/i3-autobuild.list > /dev/null
+
 sudo apt update
