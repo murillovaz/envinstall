@@ -123,6 +123,10 @@ __install_nitrogen__() {
 }
 
 __install_i3__() {
+    sudo apt install neofetch -y
+}
+
+__install_i3__() {
     sudo apt install i3 -y
 }
 
