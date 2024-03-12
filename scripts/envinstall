@@ -7,7 +7,7 @@ install_deps() {
     warn "Starting installation"
     sudo apt update && sudo apt install apt-transport-https gnupg ca-certificates software-properties-common build-essential curl fzf suckless-tools -y
     warn "Adding repositories"
-    ./envinstall_repositories.sh
+    /usr/local/src/envinstall/envinstall_repositories.sh
 }
 
 do_install() {

@@ -138,8 +138,10 @@ __install_picom__() {
 
 __install_dotfiles__() {
     read -p "What is your github username?: " user_name && \
-    alias config="/usr/bin/git --git-dir=$HOME/.cfg --work-tree=$HOME"
+    echo "alias config=\"/usr/bin/git --git-dir=$HOME/.cfg --work-tree=$HOME\"" >> ~/.zshrc && \
+    echo "alias config=\"/usr/bin/git --git-dir=$HOME/.cfg --work-tree=$HOME\"" >> ~/.bashrc && \
     git clone git@github.com:$user_name/dotfiles.git $HOME/.cfg --bare && \
-    config config --local status.showUntrackedFiles no && \
-    config checkout
+    /usr/bin/git --git-dir=$HOME/.cfg --work-tree=$HOME config --local status.showUntrackedFiles no && \
+    /usr/bin/git --git-dir=$HOME/.cfg --work-tree=$HOME checkout && \
+    zsh
 }
