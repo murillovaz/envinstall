@@ -142,6 +142,6 @@ __install_dotfiles__() {
     echo "alias config=\"/usr/bin/git --git-dir=$HOME/.cfg --work-tree=$HOME\"" >> ~/.bashrc && \
     git clone git@github.com:$user_name/dotfiles.git $HOME/.cfg --bare && \
     /usr/bin/git --git-dir=$HOME/.cfg --work-tree=$HOME config --local status.showUntrackedFiles no && \
-    /usr/bin/git --git-dir=$HOME/.cfg --work-tree=$HOME checkout && \
-    zsh
+    read -p "Replace all dotfiles? (Y/N): " confirm && [[ $confirm == [yY] || $confirm == [yY][eE][sS] ]] && \
+    /usr/bin/git --git-dir=$HOME/.cfg --work-tree=$HOME checkout -f && zsh
 }
