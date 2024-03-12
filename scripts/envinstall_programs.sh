@@ -118,14 +118,6 @@ __install_discord__() {
     sudo dpkg -i /tmp/$DISCORD_PKG_FILE
 }
 
-__install_dotfiles__() {
-    read -p "What is your github username?: " user_name && \
-    alias config="/usr/bin/git --git-dir=$HOME/.cfg --work-tree=$HOME"
-    git clone git@github.com:$user_name/dotfiles.git $HOME/.cfg --bare && \
-    config config --local status.showUntrackedFiles no && \
-    config checkout
-}
-
 __install_nitrogen__() {
     sudo apt install nitrogen -y
 }
@@ -135,5 +127,19 @@ __install_i3__() {
 }
 
 __install_picom__() {
-    sudo apt install picom -y
+    sudo apt install libconfig-dev libdbus-1-dev libegl-dev libev-dev libgl-dev libepoxy-dev libpcre2-dev libpixman-1-dev libx11-xcb-dev libxcb1-dev libxcb-composite0-dev libxcb-damage0-dev libxcb-dpms0-dev libxcb-glx0-dev libxcb-image0-dev libxcb-present-dev libxcb-randr0-dev libxcb-render0-dev libxcb-render-util0-dev libxcb-shape0-dev libxcb-util-dev libxcb-xfixes0-dev libxext-dev meson ninja-build uthash-dev -y && \
+    cd /tmp && rm -rf ./picom && git clone -b stable/11 https://github.com/yshui/picom && \
+    cd /tmp/picom && \
+    meson setup --buildtype=release build && \
+    ninja -C build && \
+    ninja -C build install && \
+    cd
+}
+
+__install_dotfiles__() {
+    read -p "What is your github username?: " user_name && \
+    alias config="/usr/bin/git --git-dir=$HOME/.cfg --work-tree=$HOME"
+    git clone git@github.com:$user_name/dotfiles.git $HOME/.cfg --bare && \
+    config config --local status.showUntrackedFiles no && \
+    config checkout
 }
