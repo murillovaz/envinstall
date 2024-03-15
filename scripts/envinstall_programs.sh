@@ -140,6 +140,14 @@ __install_picom__() {
     cd
 }
 
+__install_zig__() {
+    sudo rm -rf /usr/local/zig && \
+    sudo mkdir -p /usr/local/zig && \
+    ZIG_VERSION=$(curl -s https://ziglang.org/download/index.json | jq -r '.master["x86_64-linux"].tarball') && \
+    sudo wget $ZIG_VERSION -O /tmp/zig.tar.xz && \
+    sudo tar -xf /tmp/zig.tar.xz -C /usr/local/zig --strip-components 1
+}
+
 __install_dotfiles__() {
     read -p "What is your github username?: " user_name && \
     echo "alias config=\"/usr/bin/git --git-dir=$HOME/.cfg --work-tree=$HOME\"" >> ~/.zshrc && \
