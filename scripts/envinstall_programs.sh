@@ -11,7 +11,9 @@ __install_go__() {
     GOLANG_PKG_VERSION=$(curl 'https://go.dev/VERSION?m=text' | grep go) && \
     GOLANG_PKG_FILE="$GOLANG_PKG_VERSION.linux-amd64.tar.gz" && \
     wget https://go.dev/dl/$GOLANG_PKG_FILE -P /tmp/ && \
-    sudo rm -rf /usr/local/go && sudo tar -C /usr/local -xzf /tmp/$GOLANG_PKG_FILE && export PATH=$PATH:/usr/local/go/bin
+    sudo rm -rf /usr/local/go && sudo tar -C /usr/local -xzf /tmp/$GOLANG_PKG_FILE && export PATH=$PATH:/usr/local/go/bin && \
+    /usr/local/go/bin/go install github.com/go-delve/delve/cmd/dlv@latest
+
 }
 
 __install_zsh__() {
