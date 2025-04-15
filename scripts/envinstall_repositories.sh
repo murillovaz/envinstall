@@ -15,24 +15,5 @@ curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo gpg --batch --
 echo "deb [signed-by=/usr/share/keyrings/cloud.google.gpg] https://packages.cloud.google.com/apt cloud-sdk main" | sudo tee /etc/apt/sources.list.d/google-cloud-sdk.list
 
 
-warn "Insomnia repository being added"
-curl -1sLf 'https://packages.konghq.com/public/insomnia/setup.deb.sh' | sudo -E distro=ubuntu codename=focal bash
-
-warn "Chrome repository being added"
-curl -fSsL https://dl.google.com/linux/linux_signing_key.pub | sudo gpg --dearmor | sudo tee /usr/share/keyrings/google-chrome.gpg >> /dev/null && \
-echo deb [arch=amd64 signed-by=/usr/share/keyrings/google-chrome.gpg] http://dl.google.com/linux/chrome/deb/ stable main | sudo tee /etc/apt/sources.list.d/google-chrome.list
-
-warn "Docker repository being added"
-sudo install -m 0755 -d /etc/apt/keyrings && \
-sudo curl -fsSL https://download.docker.com/linux/debian/gpg -o /etc/apt/keyrings/docker.asc && \
-sudo chmod a+r /etc/apt/keyrings/docker.asc && \
-echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/debian $(. /etc/os-release && echo "$VERSION_CODENAME") stable" |   sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
-
-# Not recommended for Debian Stable.
-# warn "i3 repository being added"
-# sudo install -m 0755 -d /etc/apt/keyrings && \
-# sudo wget -O /etc/apt/keyrings/i3.asc https://baltocdn.com/i3-window-manager/signing.asc && \
-# sudo chmod a+r /etc/apt/keyrings/i3.asc && \
-# echo "deb [arch=amd64  signed-by=/etc/apt/keyrings/i3.asc] https://baltocdn.com/i3-window-manager/i3/i3-autobuild/ all main" | sudo tee /etc/apt/sources.list.d/i3-autobuild.list > /dev/null
-
 sudo apt update
+sudo apt install fzf
