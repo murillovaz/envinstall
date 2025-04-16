@@ -56,8 +56,8 @@ __install_node__() {
 
 __install_btop__() {
     ## Need improvements
-    wget https://github.com/aristocratos/btop/releases/download/v1.3.2/btop-x86_64-linux-musl.tbz -P /tmp/ && \
-    tar -x -j -f /tmp/btop-x86_64-linux-musl.tbz -C /tmp/ && \
+    wget https://github.com/aristocratos/btop/releases/download/v1.3.2/btop-aarch64-linux-musl.tbz -P /tmp/ && \
+    tar -x -j -f /tmp/btop-aarch64-linux-musl.tbz -C /tmp/ && \
     cd /tmp/btop && sudo make install && cd
 }
 
