@@ -36,6 +36,11 @@ __install_kubectx__() {
     sudo apt install kubectx -y
 }
 
+__install_kubectx__() {
+    sudo apt install docker.io -y && \
+    sudo usermod -aG docker $USER
+}
+
 __install_gcloud__() {
     sudo apt install google-cloud-cli -y && gcloud init
 }
