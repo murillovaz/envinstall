@@ -62,9 +62,19 @@ __install_tmux__() {
 }
 
 __install_neovim__() {
-		curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim-linux-x86_64.tar.gz && \
-	sudo rm -rf /opt/nvim && \
-	sudo tar -C /opt -xzf nvim-linux-x86_64.tar.gz 
+    warn "Downloading and installing latest Neovim..."
+    
+    # 1. Download to /tmp to avoid permission issues in the current shell directory
+    # 2. Extract to /opt
+    # 3. Rename the extracted folder to 'nvim' for a clean path
+    # 4. Link the binary to /usr/local/bin so it's in your PATH
+    
+    curl -Lo /tmp/nvim-linux-x86_64.tar.gz https://github.com/neovim/neovim/releases/latest/download/nvim-linux-x86_64.tar.gz && \
+    sudo rm -rf /opt/nvim && \
+    sudo tar -C /opt -xzf /tmp/nvim-linux-x86_64.tar.gz && \
+    sudo mv /opt/nvim-linux-x86_64 /opt/nvim && \
+    sudo ln -sf /opt/nvim/bin/nvim /usr/local/bin/nvim && \
+    rm /tmp/nvim-linux-x86_64.tar.gz
 }
 
 __install_node__() {
@@ -83,7 +93,19 @@ __install_btop__() {
 }
 
 __install_insomnia__() {
-    sudo apt install insomnia -y
+    warn "Installing Insomnia..."
+    
+    # Try apt first
+    sudo apt update
+    sudo apt install -y insomnia
+    
+    # Fallback: Manual download if apt fails
+    if [ $? -ne 0 ]; then
+        warn "Apt install failed, attempting manual .deb installation..."
+        curl -Lo /tmp/insomnia.deb "https://updates.insomnia.rest/downloads/linux/deb?&app=com.insomnia.app&source=website"
+        sudo apt install -y /tmp/insomnia.deb
+        rm /tmp/insomnia.deb
+    fi
 }
 
 __install_chrome__() {
@@ -109,6 +131,10 @@ __install_docker__() {
     sudo usermod -a -G docker $USER && warn "Logout is needed for Docker to work properly"
 }
 
+__install_githubcli__() {
+    sudo apt install gh -y
+}
+
 __install_obsidian__() {
      ## Need improvements
     OBSIDIAN_PKG_FILE="obsidian_1.5.8_amd64.deb"
@@ -127,7 +153,7 @@ __install_nitrogen__() {
 }
 
 __install_neofetch__() {
-    sudo apt install neofetch -y
+    sudo apt install -y fastfetch
 }
 
 __install_i3__() {
@@ -161,3 +187,4 @@ __install_dotfiles__() {
     read -p "Replace all dotfiles? (Y/N): " confirm && [[ $confirm == [yY] || $confirm == [yY][eE][sS] ]] && \
     /usr/bin/git --git-dir=$HOME/.cfg --work-tree=$HOME checkout -f && zsh
 }
+
