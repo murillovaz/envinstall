@@ -178,6 +178,11 @@ __install_zig__() {
     sudo tar -xf /tmp/zig.tar.xz -C /usr/local/zig --strip-components 1
 }
 
+__install_base16shell__() {
+    sudo rm -rf ~/.config/base16-shell && \
+    git clone https://github.com/chriskempson/base16-shell.git ~/.config/base16-shell
+}
+
 __install_dotfiles__() {
     read -p "What is your github username?: " user_name && \
     echo "alias config=\"/usr/bin/git --git-dir=$HOME/.cfg --work-tree=$HOME\"" >> ~/.zshrc && \
